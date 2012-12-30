@@ -1,0 +1,2 @@
+[{$smarty.block.parent}]
+<li [{if $active_link == "cc_account_tickets"}]class="active"[{/if}]><a href="[{ oxgetseourl ident=$oViewConf->getSelfLink()|cat:"cl=cc_account_tickets" }]" rel="nofollow">[{ oxmultilang ident="CC_TICKETSYSTEM_MY_TICKETS" }]</a></li>
