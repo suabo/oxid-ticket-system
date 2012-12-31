@@ -5,8 +5,8 @@
   [{foreach from=$ticket_texts item=text}]
     <table cellspacing="0" cellpadding="0" style="border: 1px solid #000; margin-bottom: 20px;" width="50%">
       <tr>
-        <td style="width:20%; background-color: #DDD;"><strong><img src="[{$text.image}]"> [{$text.author}]</strong></td>
-        <td style="width:80%; background-color: #DDD;">[{$text.timestamp}]</td>
+        <td style="width:80%; background-color: #DDD;"><strong><img src="[{$text.image}]"> [{$text.author}]</strong></td>
+        <td style="width:20%; background-color: #DDD;">[{$text.timestamp|date_format:"%d.%m.%Y, %H:%M"}]</td>
       </tr>
       <tr>
         <td colspan=2>[{$text.text}]</td>

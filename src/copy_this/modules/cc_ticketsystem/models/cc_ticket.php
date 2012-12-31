@@ -78,9 +78,24 @@ class cc_ticket extends oxBase {
 
   /**
    * Array with ticket texts.
+   *
    * @var array
    */
   protected $_aTextList = null;
+
+  /**
+   * User real fullname.
+   *
+   * @var string
+   */
+  protected $_sUserFullName = '';
+
+  /**
+   * Support display name.
+   *
+   * @var string
+   */
+  protected $_sSupportDisplay = '';
 
   /**
    * Initialises the instance
@@ -103,6 +118,15 @@ class cc_ticket extends oxBase {
     if ( $this->_aTextList !== null ) {
       return $this->_aTextList;
     }
+
+    $oUser = oxNew('oxUser');
+    $oUser->load($this->cctickets__oxuserid->rawValue);
+    $this->_sUserFullName = $oUser->oxuser__oxfname->rawValue . ' ' . $oUser->oxuser__oxlname->rawValue;
+
+    $oxConfig = oxConfig::getInstance();
+    $sShopId = $oxConfig->getShopId();
+    $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
+    $this->_sSupportDisplay = $oxConfig->getShopConfVar('supportname', $sShopId, $sModule);
 
     $sSelect = "SELECT * FROM cctickettexts WHERE TICKETID = '".$this->_sOXID."'";
     $sSelect .= " ORDER BY TIMESTAMP";
@@ -144,16 +168,11 @@ class cc_ticket extends oxBase {
   protected function _getAuthorName($name) {
 
     if($name == self::AUTHOR_USER) {
-      $oUser = $this->getUser();
-      return $oUser->oxuser__oxfname->rawValue . ' ' . $oUser->oxuser__oxlname->rawValue;
+      return $this->_sUserFullName;
     }
 
     elseif($name == self::AUTHOR_ADMIN) {
-
-      $oxConfig = oxConfig::getInstance();
-      $sShopId = $oxConfig->getShopId();
-      $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
-      return $oxConfig->getShopConfVar('supportname', $sShopId, $sModule);
+      return $this->_sSupportDisplay;
     }
 
     return $name;
