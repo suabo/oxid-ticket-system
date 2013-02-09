@@ -41,4 +41,3 @@ $aLang = array(
   'CC_TICKETSYSTEM_NEW_ANSWER' => 'a new answer was added to your ticket.',
   'CC_TICKETSYSTEM_GOTO_TICKET' => 'Go to ticket'
 );
-?>

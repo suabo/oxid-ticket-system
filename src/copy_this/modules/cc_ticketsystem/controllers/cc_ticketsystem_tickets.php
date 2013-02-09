@@ -38,11 +38,32 @@ class cc_ticketsystem_tickets extends Shop_Config {
   protected $_sThisOverviewTemplate = 'cc_ticketsystem_overview.tpl';
 
   /**
-   * List with all users tickets.
+   * Choosen ticket.
+   *
+   * @var cc_ticket
+   */
+  protected $_oTicket = null;
+
+  /**
+   * Lists all tickets that need a support answer.
    *
    * @var array
    */
-  protected $_aTicketList = null;
+  protected $_aAdminTickets = null;
+
+  /**
+   * Lists all tickets waiting for a customer response.
+   *
+   * @var array
+   */
+  protected $_aUserTickets = null;
+
+  /**
+   * Lists all closed tickets.
+   *
+   * @var array
+   */
+  protected $_aClosedTickets = null;
 
   /**
    * Returns the right template and prepares the view data.
@@ -51,22 +72,86 @@ class cc_ticketsystem_tickets extends Shop_Config {
    */
   public function render() {
 
+    parent::render();
+
     if(isset($_GET['ticket'])) {
 
       $ticket = oxNew('cc_ticket');
       $ticket->load($_GET['ticket']);
-      $this->_aViewData['ticket'] = $ticket;
-      $this->_aViewData['ticket_texts'] = $ticket->getTextList();
+      $this->_oTicket = $ticket;
 
       return $this->_sThisTicketTemplate;
     }
 
     $tickets = $this->getTicketList();
-    $this->_aViewData['admin_tickets'] = $tickets[cc_ticket::STATE_ADMIN_ACTION];
-    $this->_aViewData['user_tickets'] = $tickets[cc_ticket::STATE_USER_ACTION];
-    $this->_aViewData['closed_tickets'] = $tickets[cc_ticket::STATE_CLOSED];
+    $this->_aAdminTickets = $tickets[cc_ticket::STATE_ADMIN_ACTION];
+    $this->_aUserTickets = $tickets[cc_ticket::STATE_USER_ACTION];
+    $this->_aClosedTickets = $tickets[cc_ticket::STATE_CLOSED];
 
     return $this->_sThisOverviewTemplate;
+  }
+
+  /**
+   * Returns ticket ID for template output.
+   *
+   * @return string
+   */
+  public function getTicketOxid() {
+    return $this->_oTicket->cctickets__oxid->rawValue;
+  }
+
+  /**
+   * Returns ticket subject for template output.
+   *
+   * @return string
+   */
+  public function getTicketSubject() {
+    return $this->_oTicket->cctickets__subject->rawValue;
+  }
+
+  /**
+   * Returns ticket state for template output.
+   *
+   * @return string
+   */
+  public function getTicketState() {
+    return $this->_oTicket->cctickets__state->rawValue;
+  }
+
+  /**
+   * Returns ticket texts for template output.
+   *
+   * @return array
+   */
+  public function getTicketTexts() {
+    return $this->_oTicket->getTextList();
+  }
+
+  /**
+   * Returns tickets waiting for admin response for template output.
+   *
+   * @return array
+   */
+  public function getAdminTickets() {
+    return $this->_aAdminTickets;
+  }
+
+  /**
+   * Returns tickets waiting for customer response for template output.
+   *
+   * @return array
+   */
+  public function getUserTickets() {
+    return $this->_aUserTickets;
+  }
+
+  /**
+   * Returns closed tickets for template output.
+   *
+   * @return array
+   */
+  public function getClosedTickets() {
+    return $this->_aClosedTickets;
   }
 
   /**
@@ -80,8 +165,7 @@ class cc_ticketsystem_tickets extends Shop_Config {
       return $this->_aTicketList;
     }
 
-    $sSelect = "SELECT * FROM cctickets";
-    $sSelect .= " ORDER BY UPDATED DESC";
+    $sSelect = "SELECT * FROM cctickets ORDER BY UPDATED DESC";
 
     $oTicketList = oxNew('oxList');
     $oTicketList->init('cc_ticket');
@@ -118,8 +202,8 @@ class cc_ticketsystem_tickets extends Shop_Config {
    */
   public function updateTicket() {
 
-    $sText = trim((string)oxConfig::getParameter('tickettext', true));
-    $sTicketId = trim((string)oxConfig::getParameter('oxid', true));
+    $sText = trim($this->getConfig()->getParameter('tickettext', true));
+    $sTicketId = trim($this->getConfig()->getParameter('oxid', true));
     $sTimestamp = date('Y-m-d H:i:s');
 
     $oTicket = oxNew('cc_ticket');

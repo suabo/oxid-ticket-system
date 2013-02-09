@@ -32,13 +32,12 @@ $aLang = array(
   'CC_TICKETSYSTEM_SUPPORT_NEEDED' => 'Supportantwort erforderlich:',
   'CC_TICKETSYSTEM_CUSTOMER_RESPONSE' => 'Kundenantwort abwarten:',
   'CC_TICKETSYSTEM_LOCK' => 'Ticket schließen',
-  'CC_TICKETSYSTEM_UNLOCK' => 'Ticket öffnen',
+  'CC_TICKETSYSTEM_UNLOCK' => 'Ticket &ouml;ffnen',
   'CC_TICKETSYSTEM_MESSAGE' => 'Ihre Nachricht:',
   'CC_TICKETSYSTEM_SEND' => 'Absenden',
   'CC_TICKETSYSTEM_TICKET_UPDATE' => 'Ticket-Update',
   'CC_TICKETSYSTEM_HELLO' => 'Hallo',
   'CC_TICKETSYSTEM_ANSWER' => 'Antwort:',
-  'CC_TICKETSYSTEM_NEW_ANSWER' => 'zu Ihrem Ticket wurde eine neue Antwort hinzugefügt.',
+  'CC_TICKETSYSTEM_NEW_ANSWER' => 'zu Ihrem Ticket wurde eine neue Antwort hinzugef&uuml;gt.',
   'CC_TICKETSYSTEM_GOTO_TICKET' => 'Zum Ticket'
 );
-?>

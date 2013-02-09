@@ -4,14 +4,14 @@
 
   <h2>[{oxmultilang ident="CC_TICKETSYSTEM_OPEN"}]</h2>
   <strong>[{oxmultilang ident="CC_TICKETSYSTEM_SUPPORT_NEEDED"}]</strong><br>
-  [{include file="cc_ticketsystem_table.tpl" aTickets=$admin_tickets action='LOCK'}]
+  [{include file="cc_ticketsystem_table.tpl" aTickets=$oView->getAdminTickets() action='LOCK'}]
 
   <strong>[{oxmultilang ident="CC_TICKETSYSTEM_CUSTOMER_RESPONSE"}]</strong><br>
-  [{include file="cc_ticketsystem_table.tpl" aTickets=$user_tickets action='LOCK'}]
+  [{include file="cc_ticketsystem_table.tpl" aTickets=$oView->getUserTickets() action='LOCK'}]
 
   <br>
   <h2>[{oxmultilang ident="CC_TICKETSYSTEM_CLOSED"}]</h2>
-  [{include file="cc_ticketsystem_table.tpl" aTickets=$closed_tickets action='UNLOCK'}]
+  [{include file="cc_ticketsystem_table.tpl" aTickets=$oView->getClosedTickets() action='UNLOCK'}]
 
 
 [{if ($info)}]

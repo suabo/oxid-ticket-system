@@ -123,10 +123,10 @@ class cc_ticket extends oxBase {
     $oUser->load($this->cctickets__oxuserid->rawValue);
     $this->_sUserFullName = $oUser->oxuser__oxfname->rawValue . ' ' . $oUser->oxuser__oxlname->rawValue;
 
-    $oxConfig = oxConfig::getInstance();
+    $oxConfig = $this->getConfig();
     $sShopId = $oxConfig->getShopId();
-    $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
-    $this->_sSupportDisplay = $oxConfig->getShopConfVar('supportname', $sShopId, $sModule);
+    $sModule = $oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
+    $this->_sSupportDisplay = $oxConfig->getShopConfVar('ccSupportname', $sShopId, $sModule);
 
     $sSelect = "SELECT * FROM cctickettexts WHERE TICKETID = '".$this->_sOXID."'";
     $sSelect .= " ORDER BY TIMESTAMP";

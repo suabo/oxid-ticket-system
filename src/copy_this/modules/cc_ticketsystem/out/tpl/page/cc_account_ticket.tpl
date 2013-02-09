@@ -1,8 +1,8 @@
 [{capture append="oxidBlock_content"}]
 
-  <h1 class="pageHead">[{ oxmultilang ident="CC_TICKETSYSTEM_MY_TICKETS" }]: [{$ticket->cctickets__subject->rawValue}]</h1>
+  <h1 class="pageHead">[{ oxmultilang ident="CC_TICKETSYSTEM_MY_TICKETS" }]: [{$oView->getTicketSubject()}]</h1>
 
-  [{foreach from=$ticket_texts item=text}]
+  [{foreach from=$oView->getTicketTexts() item=text}]
     <table cellspacing="0" cellpadding="0" style="border: 1px solid #000; margin-bottom: 20px;" width="100%">
       <tr>
         <td style="width:50%; background-color: #DDD;"><strong><img src="[{$text.image}]"> [{$text.author}]</strong></td>
@@ -14,10 +14,10 @@
     </table>
   [{/foreach}]
 
-  [{if $ticket->cctickets__state->rawValue != 3 && isset($update)}]
+  [{if $oView->getTicketState() != 3 && $oView->getUpdate()}]
   [{include file="cc_form_update.tpl"}]
-  [{elseif $ticket->cctickets__state->rawValue != 3}]
-  <a class="readMore" href="[{oxgetseourl ident=$oViewConf->getSelfLink()|cat:"cl=cc_account_tickets" params="update=true&ticket="|cat:$ticket->cctickets__oxid->rawValue}]" rel="nofollow">+ Nachricht hinzufügen</a>
+  [{elseif $oView->getTicketState() != 3}]
+  <a class="readMore" href="[{oxgetseourl ident=$oViewConf->getSelfLink()|cat:"cl=cc_account_tickets" params="update=true&ticket="|cat:$oView->getTicketOxid()}]" rel="nofollow">+ [{ oxmultilang ident="CC_TICKETSYSTEM_ADD_MESSAGE" }]</a>
   [{/if}]
 
 [{/capture}]

@@ -52,11 +52,25 @@ class cc_account_tickets extends Account {
   protected $_sModuleId = 'cc_ticketsystem';
 
   /**
+   * Active user ticket.
+   *
+   * @var cc_ticket
+   */
+  protected $_oTicket = null;
+
+  /**
    * List with all users tickets.
    *
    * @var array
    */
-  protected $_aTicketList  = null;
+  protected $_aTicketList = null;
+
+  /**
+   * Update setting.
+   *
+   * @var boolean
+   */
+  protected $_blUpdate = false;
 
   /**
    * Returns the right template and prepares the view data.
@@ -86,18 +100,17 @@ class cc_account_tickets extends Account {
       // user created ticket ?
       if($ticket->cctickets__oxuserid->rawValue == $oUser->getId()) {
 
-        $this->_aViewData['ticket'] = $ticket;
-        $this->_aViewData['ticket_texts'] = $ticket->getTextList();
+        $this->_oTicket = $ticket;
 
         if(isset($_GET['update']) && $_GET['update']) {
-          $this->_aViewData['update'] = true;
+          $this->_blUpdate = true;
         }
 
         return $this->_sThisTicketTemplate;
       }
     }
 
-    $this->_aViewData['tickets'] = $oUser->getTickets();
+    $this->_aTicketList = $oUser->getTickets();
 
     return $this->_sThisOverviewTemplate;
   }
@@ -120,13 +133,67 @@ class cc_account_tickets extends Account {
     $aPath['link']  = $this->getLink();
     $aPaths[] = $aPath;
 
-    if(isset($this->_aViewData['ticket'])) {
-      $aPath['title'] = $this->_aViewData['ticket']->cctickets__subject->rawValue;
-      $aPath['link'] = $this->getLink() . "&ticket=" . $this->_aViewData['ticket']->cctickets__oxid->rawValue;
+    if($this->_oTicket != null) {
+      $aPath['title'] = $this->_oTicket->cctickets__subject->rawValue;
+      $aPath['link'] = $this->getLink() . "&ticket=" . $this->_oTicket->cctickets__oxid->rawValue;
       $aPaths[] = $aPath;
     }
 
     return $aPaths;
+  }
+
+  /**
+   * Returns ticket ID for template output.
+   *
+   * @return string
+   */
+  public function getTicketOxid() {
+    return $this->_oTicket->cctickets__oxid->rawValue;
+  }
+
+  /**
+   * Returns ticket subject for template output.
+   *
+   * @return string
+   */
+  public function getTicketSubject() {
+    return $this->_oTicket->cctickets__subject->rawValue;
+  }
+
+  /**
+   * Returns ticket state for template output.
+   *
+   * @return string
+   */
+  public function getTicketState() {
+    return $this->_oTicket->cctickets__state->rawValue;
+  }
+
+  /**
+   * Returns ticket texts for template output.
+   *
+   * @return array
+   */
+  public function getTicketTexts() {
+    return $this->_oTicket->getTextList();
+  }
+
+  /**
+   * Returns an array with all ticket of active user for template output.
+   *
+   * @return array
+   */
+  public function getTicketList() {
+    return $this->_aTicketList;
+  }
+
+  /**
+   * Returns if customer wants to update the ticket.
+   *
+   * @return boolean
+   */
+  public function getUpdate() {
+    return $this->_blUpdate;
   }
 
   /**
@@ -136,10 +203,12 @@ class cc_account_tickets extends Account {
    */
   public function newTicket() {
 
-    $sSubject = trim((string)oxConfig::getParameter('ticketsubject', true));
-    $sText = trim((string)oxConfig::getParameter('tickettext', true));
+    $oxConfig = $this->getConfig();
+
+    $sSubject = trim((string)$oxConfig->getParameter('ticketsubject', true));
+    $sText = trim((string)$oxConfig->getParameter('tickettext', true));
     $sTimestamp = date('Y-m-d H:i:s');
-    $sShopId     = $this->getConfig()->getShopId();
+    $sShopId     = $oxConfig->getShopId();
     $sUserId     = oxSession::getVar( 'usr' );
 
     if(!$sUserId) {
@@ -172,9 +241,8 @@ class cc_account_tickets extends Account {
     $oTicketText->cctickettexts__author    = new oxField($oTicket::AUTHOR_USER);
     $oTicketText->save();
 
-    $oxConfig = oxConfig::getInstance();
-    $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
-    if($oxConfig->getShopConfVar('sendmail', $sShopId, $sModule)) {
+    $sModule = $oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
+    if($oxConfig->getShopConfVar('ccSendmail', $sShopId, $sModule)) {
       $oEmail = oxNew('cc_oxemail');
       $oEmail->sendNewTicketToAdmin($sSubject, $sText);
     }
@@ -189,10 +257,12 @@ class cc_account_tickets extends Account {
    */
   public function updateTicket() {
 
-    $sText = trim((string)oxConfig::getParameter('tickettext', true));
-    $sTicketId = trim((string)oxConfig::getParameter('tid', true));
+    $oxConfig = $this->getConfig();
+
+    $sText = trim((string)$oxConfig->getParameter('tickettext', true));
+    $sTicketId = trim((string)$oxConfig->getParameter('tid', true));
     $sTimestamp = date('Y-m-d H:i:s');
-    $sShopId     = $this->getConfig()->getShopId();
+    $sShopId     = $oxConfig->getShopId();
     $sUserId     = oxSession::getVar( 'usr' );
 
     if(!$sUserId) {
@@ -223,9 +293,8 @@ class cc_account_tickets extends Account {
     $oTicketText->cctickettexts__author    = new oxField($oTicket::AUTHOR_USER);
     $oTicketText->save();
 
-    $oxConfig = oxConfig::getInstance();
-    $sModule = oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
-    if($oxConfig->getShopConfVar('sendmail', $sShopId, $sModule)) {
+    $sModule = $oxConfig::OXMODULE_MODULE_PREFIX . $this->_sModuleId;
+    if($oxConfig->getShopConfVar('ccSendmail', $sShopId, $sModule)) {
       $oEmail = oxNew('cc_oxemail');
       $oEmail->sendTicketUpdateToAdmin($oTicket->cctickets__subject->rawValue, $sText);
     }

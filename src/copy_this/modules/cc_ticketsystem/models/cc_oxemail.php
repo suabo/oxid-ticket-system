@@ -55,8 +55,8 @@ class cc_oxemail extends cc_oxemail_parent {
 
     $oShop = $this->_getShop();
 
-    $myConfig = $this->getConfig();
-    $sUrl = $myConfig->getShopURL() . 'admin/';
+    $oxConfig = $this->getConfig();
+    $sUrl = $oxConfig->getShopURL() . 'admin/';
 
     //set mail params (from, fromName, smtp... )
     $this->_setMailParams( $oShop );
@@ -71,7 +71,7 @@ class cc_oxemail extends cc_oxemail_parent {
 
     $this->setRecipient( $oShop->oxshops__oxowneremail->value, $oShop->oxshops__oxname->getRawValue() );
     $this->setFrom( $oShop->oxshops__oxowneremail->value, $oShop->oxshops__oxname->getRawValue() );
-    $this->setBody( $oSmarty->fetch( $this->getConfig()->getTemplatePath( $this->_sTicketNewAdminTemplatePlain, false ) ) );
+    $this->setBody( $oSmarty->fetch( $oxConfig->getTemplatePath( $this->_sTicketNewAdminTemplatePlain, false ) ) );
     $this->setAltBody( "" );
     $this->setSubject($oLang->translateString('CC_TICKETSYSTEM_NEW_TICKET') . ': ' . $sTicketTitle);
 
@@ -90,8 +90,8 @@ class cc_oxemail extends cc_oxemail_parent {
 
     $oShop = $this->_getShop();
 
-    $myConfig = $this->getConfig();
-    $sUrl = $myConfig->getShopURL() . 'admin/';
+    $oxConfig = $this->getConfig();
+    $sUrl = $oxConfig->getShopURL() . 'admin/';
 
     //set mail params (from, fromName, smtp... )
     $this->_setMailParams( $oShop );
@@ -106,7 +106,7 @@ class cc_oxemail extends cc_oxemail_parent {
 
     $this->setRecipient( $oShop->oxshops__oxowneremail->value, $oShop->oxshops__oxname->getRawValue() );
     $this->setFrom( $oShop->oxshops__oxowneremail->value, $oShop->oxshops__oxname->getRawValue() );
-    $this->setBody( $oSmarty->fetch( $this->getConfig()->getTemplatePath( $this->_sTicketUpdateAdminTemplatePlain, false ) ) );
+    $this->setBody( $oSmarty->fetch( $oxConfig->getTemplatePath( $this->_sTicketUpdateAdminTemplatePlain, false ) ) );
     $this->setAltBody( "" );
     $this->setSubject($oLang->translateString('CC_TICKETSYSTEM_TICKET_UPDATE') . ': ' . $sTicketTitle);
 
@@ -125,8 +125,8 @@ class cc_oxemail extends cc_oxemail_parent {
 
     $oShop = $this->_getShop();
 
-    $myConfig = $this->getConfig();
-    $sUrl = $myConfig->getShopURL() . '?cl=cc_account_tickets&amp;ticket=' . $oTicket->getId();
+    $oxConfig = $this->getConfig();
+    $sUrl = $oxConfig->getShopURL() . '?cl=cc_account_tickets&amp;ticket=' . $oTicket->getId();
 
     // load user
     $oUser = oxNew('oxuser');
@@ -147,7 +147,7 @@ class cc_oxemail extends cc_oxemail_parent {
 
     $this->setRecipient( $oUser->oxuser__oxusername->value, $sFullName );
     $this->setFrom( $oShop->oxshops__oxowneremail->value, $oShop->oxshops__oxname->getRawValue() );
-    $this->setBody( $oSmarty->fetch( $this->getConfig()->getTemplatePath( $this->_sTicketUpdateUserTemplatePlain, false ) ) );
+    $this->setBody( $oSmarty->fetch( $oxConfig->getTemplatePath( $this->_sTicketUpdateUserTemplatePlain, false ) ) );
     $this->setAltBody( "" );
     $this->setSubject($oLang->translateString('CC_TICKETSYSTEM_TICKET_UPDATE') . ': ' . $oTicket->cctickets__subject->rawValue);
 

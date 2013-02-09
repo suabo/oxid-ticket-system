@@ -1,6 +1,6 @@
 <?php
 /**
- * Barzahlen Payment Module (OXID eShop)
+ * CommerceCoding Ticketsystem for OXID eShop
  *
  * NOTICE OF LICENSE
  *
@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/
  *
- * @copyright   Copyright (c) 2012 Zerebro Internet GmbH (http://www.barzahlen.de)
+ * @copyright   Copyright (c) 2012 CommerceCoding (http://www.commerce-coding.de)
  * @author      Alexander Diebler
  * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  */
@@ -32,6 +32,7 @@ $aLang = array(
   'CC_TICKETSYSTEM_TICKET' => 'Ticket',
   'CC_TICKETSYSTEM_NEW_TICKET' => 'New Ticket',
   'CC_TICKETSYSTEM_TICKET_UPDATE' => 'Ticket update',
+  'CC_TICKETSYSTEM_ADD_MESSAGE' => 'Add Message',
   'CC_TICKETSYSTEM_SUBJECT' => 'Your Request:',
   'CC_TICKETSYSTEM_MESSAGE' => 'Your Message:',
   'CC_TICKETSYSTEM_SEND' => 'Send',
@@ -43,4 +44,3 @@ $aLang = array(
   'CC_TICKETSYSTEM_ERROR_SHOP' => 'Error: Unknown Shop.',
   'CC_TICKETSYSTEM_ERROR_USER' => 'Error: You have to be logged in to write a ticket entry.'
 );
-?>

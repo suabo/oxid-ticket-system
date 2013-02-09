@@ -25,9 +25,8 @@ $sLangName  = "English";
 $aLang = array(
 'charset' => 'UTF-8',
 'SHOP_MODULE_GROUP_main' => 'Ticketsystem Settings',
-'SHOP_MODULE_sendmail' => 'Notifications',
-'HELP_SHOP_MODULE_sendmail' => 'Activate Notifications to be informed about new and updated tickets.',
-'SHOP_MODULE_supportname' => 'Support Display Name',
-'HELP_SHOP_MODULE_supportname' => 'Which name should be displayed along with your responses?'
+'SHOP_MODULE_ccSendmail' => 'Notifications',
+'HELP_SHOP_MODULE_ccSendmail' => 'Activate Notifications to be informed about new and updated tickets.',
+'SHOP_MODULE_ccSupportname' => 'Support Display Name',
+'HELP_SHOP_MODULE_ccSupportname' => 'Which name should be displayed along with your responses?'
 );
-?>
