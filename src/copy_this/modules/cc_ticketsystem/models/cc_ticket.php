@@ -162,7 +162,7 @@ class cc_ticket extends oxBase {
   /**
    * Prepares author name for template. Full name for user.
    *
-   * @param string $name standart name
+   * @param string $name standard name
    * @return string
    */
   protected function _getAuthorName($name) {
@@ -181,17 +181,17 @@ class cc_ticket extends oxBase {
   /**
    * Prepares author picture for template.
    *
-   * @param string $name standart name
+   * @param string $name standard name
    * @return string
    */
   protected function _getAuthorPicture($name) {
 
-    $oUser = $this->getUser();
     $baseUrl = "/modules/cc_ticketsystem/out/img/";
 
     if($name == self::AUTHOR_USER) {
-      $oUser = $this->getUser();
-      if($oUser->oxuser__oxfname->rawValue == "MRS") {
+      $oUser = oxNew('oxUser');
+      $oUser->load($this->cctickets__oxuserid->rawValue);
+      if($oUser->oxuser__oxsal->rawValue == "MRS") {
         return $baseUrl . "user_female.png";
       }
       else {
