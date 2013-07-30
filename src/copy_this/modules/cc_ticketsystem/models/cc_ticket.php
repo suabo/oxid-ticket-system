@@ -186,7 +186,7 @@ class cc_ticket extends oxBase {
    */
   protected function _getAuthorPicture($name) {
 
-    $baseUrl = "/modules/cc_ticketsystem/out/img/";
+    $baseUrl = $this->getConfig()->getShopUrl() . "modules/cc_ticketsystem/out/img/";
 
     if($name == self::AUTHOR_USER) {
       $oUser = oxNew('oxUser');

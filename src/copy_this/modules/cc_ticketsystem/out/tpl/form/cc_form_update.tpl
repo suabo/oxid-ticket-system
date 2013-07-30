@@ -1,4 +1,4 @@
-<form action="[{ $oViewConf->getSelfActionLink() }]" name="ticket_update" method="post">
+<form action="[{ $oViewConf->getSelfActionLink() }]" name="ticket_update" method="post" id="update" style="display: none;">
   <ul class="">
     <li>
       [{ $oViewConf->getHiddenSid() }]

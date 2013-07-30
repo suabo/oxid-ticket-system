@@ -14,10 +14,9 @@
     </table>
   [{/foreach}]
 
-  [{if $oView->getTicketState() != 3 && $oView->getUpdate()}]
+  [{if $oView->getTicketState() != 3}]
+  <div onclick="this.style.display = 'none'; update.style.display = 'block';">+ [{ oxmultilang ident="CC_TICKETSYSTEM_ADD_MESSAGE" }]</div>
   [{include file="cc_form_update.tpl"}]
-  [{elseif $oView->getTicketState() != 3}]
-  <a class="readMore" href="[{oxgetseourl ident=$oViewConf->getSelfLink()|cat:"cl=cc_account_tickets" params="update=true&ticket="|cat:$oView->getTicketOxid()}]" rel="nofollow">+ [{ oxmultilang ident="CC_TICKETSYSTEM_ADD_MESSAGE" }]</a>
   [{/if}]
 
 [{/capture}]

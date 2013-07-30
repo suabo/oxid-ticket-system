@@ -10,7 +10,7 @@
   <td style="text-align: center;">[{$ticket.updated|date_format:"%d.%m.%Y, %H:%M"}]</td>
   <td>
     <a href="[{$oViewConf->getSelfLink()}]cl=cc_ticketsystem_tickets&ticket=[{$ticketid}]&fnc=[{$action}]">
-      <img src="/modules/cc_ticketsystem/out/img/[{$action}].png" title="[{oxmultilang ident="CC_TICKETSYSTEM_"|cat:$action}]">
+      <img src="[{$oViewConf->getBaseDir()}]modules/cc_ticketsystem/out/img/[{$action}].png" title="[{oxmultilang ident="CC_TICKETSYSTEM_"|cat:$action}]">
     </a>
   </td>
 </tr>

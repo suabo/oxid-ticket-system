@@ -66,13 +66,6 @@ class cc_account_tickets extends Account {
   protected $_aTicketList = null;
 
   /**
-   * Update setting.
-   *
-   * @var boolean
-   */
-  protected $_blUpdate = false;
-
-  /**
    * Returns the right template and prepares the view data.
    *
    * @return string current template file name
@@ -101,10 +94,6 @@ class cc_account_tickets extends Account {
       if($ticket->cctickets__oxuserid->rawValue == $oUser->getId()) {
 
         $this->_oTicket = $ticket;
-
-        if(isset($_GET['update']) && $_GET['update']) {
-          $this->_blUpdate = true;
-        }
 
         return $this->_sThisTicketTemplate;
       }
@@ -185,15 +174,6 @@ class cc_account_tickets extends Account {
    */
   public function getTicketList() {
     return $this->_aTicketList;
-  }
-
-  /**
-   * Returns if customer wants to update the ticket.
-   *
-   * @return boolean
-   */
-  public function getUpdate() {
-    return $this->_blUpdate;
   }
 
   /**
